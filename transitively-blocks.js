@@ -32,9 +32,11 @@ $(document).ready(function() {
   });
 
   $('#enterBugNum').blur(function() {
-    $('#rootBugNum').show();
-    $('#rootBugSummary').show();
-    $('#enterBugNum').hide();
+    if ($('#rootBugNum').text() != '') {
+      $('#rootBugNum').show();
+      $('#rootBugSummary').show();
+      $('#enterBugNum').hide();
+    }
   });
 
   $('#enterBugNum').keypress(function(e) {
