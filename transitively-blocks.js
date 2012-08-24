@@ -155,7 +155,7 @@ function showBugs(bugs) {
 
   for (var id in bugs) {
     var b = bugs[id];
-    if (b.id == $('#rootBugId').text()) {
+    if (b.id == $('#rootBugNum').text()) {
       continue;
     }
 
