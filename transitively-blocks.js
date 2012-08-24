@@ -6,6 +6,14 @@ $(document).ready(function() {
     return 'https://bugzilla.mozilla.org/show_bug.cgi?id=' + id;
   });
 
+  Handlebars.registerHelper('assignee_row', function(assigned_to) {
+    if (assigned_to &&
+        assigned_to.real_name &&
+        assigned_to.real_name != 'Nobody; OK to take it and work on it') {
+      return new Handlebars.SafeString('<tr><td></td><td><span class="assignedToHeader">assigned to:</span> <span class="assignedToName">' + Handlebars.Utils.escapeExpression(assigned_to.real_name) + "</span></td>");
+    }
+  });
+
   templates.bugs = Handlebars.compile($('#bugsTemplate').html());
 
   var bugNum = parseInt(location.search.substr(1));
@@ -20,14 +28,14 @@ $(document).ready(function() {
 
 var seenBugs = {};
 var retrievedBugs = {};
-var allowCaching = true;
+var allowCaching = false;
 
 function getBug(bugNum)
 {
   console.log("getBug " + bugNum);
   seenBugs[bugNum] = true;
 
-  var include_fields = ['id', 'summary', 'assigned_to', 'depends_on', 'cf_blocking_basecamp', 'status'].join(',');
+  var include_fields = ['id', 'summary', 'assigned_to', 'depends_on', 'cf_blocking_basecamp', 'status', 'whiteboard'].join(',');
 
   var req = new XMLHttpRequest();
   var apiURL = 'https://api-dev.bugzilla.mozilla.org/1.1/bug/';

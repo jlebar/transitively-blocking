@@ -1,0 +1,24 @@
+body {
+  font-family: sans-serif; }
+
+.input > * {
+  font-size: 16pt; }
+
+.defaultText {
+  color: gray; }
+
+.bugSummary:before {
+  content: " "; }
+
+.bugLink {
+  padding-right: .3em;
+  text-decoration: none; }
+  .bugLink:hover {
+    text-decoration: underline; }
+
+.assignedToHeader {
+  font-style: italic; }
+
+.bug td {
+  vertical-align: top;
+  padding: 0 0 0 0; }

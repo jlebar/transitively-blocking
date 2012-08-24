@@ -20,12 +20,13 @@
 
 <script id="bugsTemplate" type="text/x-handlebars-template">
   {{#each bugs}}
-    <div class=bug>
-      <a class='bugLink' href="{{showBug id}}">
-        <span class="bugId">{{id}}</span>
-        <span class="bugSummary">{{summary}}</span>
-      </a>
-    </div>
+    <table class='bug'>
+      <tr>
+        <td><a class='bugLink' href="{{showBug id}}">{{id}}</a></td>
+        <td><span class="bugSummary">{{summary}}</span> <span class="bugWhiteboard">{{whiteboard}}</span></td>
+      </tr>
+      {{assignee_row assigned_to}}
+    </table>
   {{/each}}
 </script>
 
