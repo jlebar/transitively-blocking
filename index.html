@@ -1,0 +1,33 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+  <script type='application/javascript' src='lib/handlebars.js'></script>
+  <script type='application/javascript' src='transitively-blocks.js'></script>
+  <link href='transitively-blocks.css' rel='stylesheet'></link>
+</head>
+<body>
+
+<div id='error'></div>
+
+<h1>Bugs transitively blocking bug <span id='rootBugNum'></span></h1>
+
+<h2>Basecamp blockers</h2>
+<div id='blockers'></div>
+
+<h2>Other bugs</h2>
+<div id='nonBlockers'></div>
+
+<script id="bugsTemplate" type="text/x-handlebars-template">
+  {{#each bugs}}
+    <div class=bug>
+      <a class='bugLink' href="{{showBug id}}">
+        <span class="bugId">{{id}}</span>
+        <span class="bugSummary">{{summary}}</span>
+      </a>
+    </div>
+  {{/each}}
+</script>
+
+</body>
+</html>
