@@ -29,3 +29,6 @@ input {
 .bug td {
   vertical-align: top;
   padding: 0 0 0 0; }
+
+#networkStatus {
+  font-style: italic; }

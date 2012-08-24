@@ -100,6 +100,8 @@ function getBug(bugNum)
     }
   };
   req.send();
+
+  updateNetworkStatus();
 }
 
 function encodeReqParams(dict) {
@@ -147,6 +149,7 @@ function addBug(bug)
   }
 
   showBugs(retrievedBugs);
+  updateNetworkStatus();
 }
 
 function showBugs(bugs) {
@@ -187,5 +190,17 @@ function showBugs(bugs) {
   var rootBug = bugs[$('#rootBugNum').text()];
   if (rootBug) {
     $('#rootBugSummary').html('<a href=https://bugzilla.mozilla.org/show_bug.cgi?id=' + rootBug.id + '>' +  rootBug.summary + "</a>");
+  }
+}
+
+function updateNetworkStatus()
+{
+  var askedFor = Object.keys(seenBugs).length;
+  var received = Object.keys(retrievedBugs).length;
+  if (askedFor == received) {
+    $('#networkStatus').text('');
+  }
+  else {
+    $('#networkStatus').text('Received ' + received + ' of ' + askedFor + ' bugs.');
   }
 }
