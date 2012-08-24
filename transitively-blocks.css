@@ -2,10 +2,15 @@ body {
   font-family: sans-serif; }
 
 h1 {
-  padding: 0 0 0 0; }
+  padding: .5em 0 0 0;
+  margin: 0; }
+
+h2 {
+  padding: .2em 0 0 0;
+  margin: 0; }
 
 #rootBugNum {
-  background: #ddd;
+  background: #dfdfdf;
   padding: .1em; }
 
 input {
@@ -28,7 +33,7 @@ input {
 
 .bug td {
   vertical-align: top;
-  padding: 0 0 0 0; }
+  padding: 0; }
 
 #networkStatus {
   font-style: italic; }

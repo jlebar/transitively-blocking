@@ -7,6 +7,7 @@ addEventListener('popstate', function(e) {
 $(document).ready(function() {
   $('#rootBugNum').hide();
   $('#enterBugNum').hide();
+  $('#rootBugSummary').hide();
 
   Handlebars.registerHelper('showBug', function(id) {
     return 'https://bugzilla.mozilla.org/show_bug.cgi?id=' + id;
@@ -21,15 +22,18 @@ $(document).ready(function() {
   });
 
   templates.bugs = Handlebars.compile($('#bugsTemplate').html());
+  templates.rootBugSummary = Handlebars.compile($('#rootBugSummaryTemplate').html());
 
   $('#rootBugNum').click(function() {
     $('#rootBugNum').hide();
+    $('#rootBugSummary').hide();
     $('#enterBugNum').show().focus();
     $('#enterBugNum').val($('#rootBugNum').text());
   });
 
   $('#enterBugNum').blur(function() {
     $('#rootBugNum').show();
+    $('#rootBugSummary').show();
     $('#enterBugNum').hide();
   });
 
@@ -60,6 +64,7 @@ function getBlockers(bugNum)
 {
   $('#blockers').text('');
   $('#nonBlockers').text('');
+  $('#rootBugSummary').text('');
   seenBugs = {};
   retrievedBugs = {};
 
@@ -70,6 +75,7 @@ function getBlockers(bugNum)
   }
   else {
     $('#rootBugNum').hide();
+    $('#rootBugSummary').hide();
     $('#enterBugNum').val(bugNum).focus();
   }
 }
@@ -189,7 +195,8 @@ function showBugs(bugs) {
 
   var rootBug = bugs[$('#rootBugNum').text()];
   if (rootBug) {
-    $('#rootBugSummary').html('<a href=https://bugzilla.mozilla.org/show_bug.cgi?id=' + rootBug.id + '>' +  rootBug.summary + "</a>");
+    $('#rootBugSummary').html(templates.rootBugSummary(rootBug));
+    $('#rootBugSummary').show();
   }
 }
 

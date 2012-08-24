@@ -10,8 +10,10 @@
 
 <div id='error'></div>
 
-<h1>Bugs transitively blocking bug <span id='rootBugNum'></span><input type='text' id='enterBugNum' size=6></input></h1>
-<h2 id='rootBugSummary'></h2>
+<h1>Bugs transitively blocking bug <span id='rootBugNum'></span><input type='text' id='enterBugNum' size=6></input> <span id="rootBugSummary"></span></h1>
+<script id="rootBugSummaryTemplate" type="text/x-handlebars-template">
+  - <a href="{{showBug id}}">{{summary}}</a>  
+</script>
 
 <h3>Basecamp blockers</h3>
 <div id='blockers'></div>
