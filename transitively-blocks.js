@@ -58,7 +58,7 @@ $(document).ready(function() {
 
 var seenBugs = {};
 var retrievedBugs = {};
-var allowCaching = true;
+var allowCaching = false;
 
 function getBlockers(bugNum)
 {

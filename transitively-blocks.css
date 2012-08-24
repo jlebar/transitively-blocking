@@ -5,16 +5,16 @@ h1 {
   padding: .5em 0 0 0;
   margin: 0; }
 
-h2 {
-  padding: .2em 0 0 0;
-  margin: 0; }
-
 #rootBugNum {
-  background: #dfdfdf;
+  background: #ddd;
   padding: .1em; }
+  #rootBugNum:hover {
+    background: #eee;
+    padding: -moz-calc(.1em - 2px);
+    border: solid 2px #ccc; }
 
 input {
-  font-size: 16pt; }
+  font-size: inherit; }
 
 .defaultText {
   color: gray; }
