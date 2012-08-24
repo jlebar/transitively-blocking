@@ -1,5 +1,9 @@
 var templates = {};
 
+addEventListener('popstate', function(e) {
+  getBlockers(parseInt(location.search.substr(1)));
+});
+
 $(document).ready(function() {
   $('#rootBugNum').hide();
   $('#enterBugNum').hide();
@@ -18,20 +22,33 @@ $(document).ready(function() {
 
   templates.bugs = Handlebars.compile($('#bugsTemplate').html());
 
+  $('#rootBugNum').click(function() {
+    $('#rootBugNum').hide();
+    $('#enterBugNum').show().focus();
+    $('#enterBugNum').val($('#rootBugNum').text());
+  });
+
+  $('#enterBugNum').blur(function() {
+    $('#rootBugNum').show();
+    $('#enterBugNum').hide();
+  });
+
+  $('#enterBugNum').keypress(function(e) {
+    if (e.which == 13 /* enter key */) {
+      var num = parseInt($('#enterBugNum').val());
+      if (!isNaN(num)) {
+        history.pushState(num, '', '?' + num);
+        getBlockers(num);
+      }
+    }
+  });
+
   var bugNum = parseInt(location.search.substr(1));
   if (!isNaN(bugNum)) {
     getBlockers(bugNum);
   }
   else {
-    $('#enterBugNum').show().focus().keypress(function(e) {
-      if (e.which == 13 /* enter key */) {
-        var num = parseInt($('#enterBugNum').val());
-        if (!isNaN(num)) {
-          console.log('getBlockers ' + num);
-          getBlockers(num);
-        }
-      }
-    });
+    $('#enterBugNum').show().focus();
   }
 });
 
@@ -41,11 +58,20 @@ var allowCaching = true;
 
 function getBlockers(bugNum)
 {
-  $('#enterBugNum').hide();
-  $('#rootBugNum').text(bugNum).show();
   $('#blockers').text('');
-  $('#otherBugs').text('');
-  getBug(bugNum);
+  $('#nonBlockers').text('');
+  seenBugs = {};
+  retrievedBugs = {};
+
+  if (!isNaN(bugNum)) {
+    $('#enterBugNum').hide();
+    $('#rootBugNum').text(bugNum).show();
+    getBug(bugNum);
+  }
+  else {
+    $('#rootBugNum').hide();
+    $('#enterBugNum').val(bugNum).focus();
+  }
 }
 
 function getBug(bugNum)
