@@ -1,7 +1,14 @@
 body {
   font-family: sans-serif; }
 
-.input > * {
+h1 {
+  padding: 0 0 0 0; }
+
+#rootBugNum {
+  background: #ddd;
+  padding: .1em; }
+
+input {
   font-size: 16pt; }
 
 .defaultText {

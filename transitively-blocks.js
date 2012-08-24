@@ -1,7 +1,9 @@
 var templates = {};
 
 $(document).ready(function() {
-  console.debug('Okay, starting.');
+  $('#rootBugNum').hide();
+  $('#enterBugNum').hide();
+
   Handlebars.registerHelper('showBug', function(id) {
     return 'https://bugzilla.mozilla.org/show_bug.cgi?id=' + id;
   });
@@ -10,29 +12,44 @@ $(document).ready(function() {
     if (assigned_to &&
         assigned_to.real_name &&
         assigned_to.real_name != 'Nobody; OK to take it and work on it') {
-      return new Handlebars.SafeString('<tr><td></td><td><span class="assignedToHeader">assigned to:</span> <span class="assignedToName">' + Handlebars.Utils.escapeExpression(assigned_to.real_name) + "</span></td>");
+      return new Handlebars.SafeString('<tr><td></td><td><span class="assignedToHeader">assigned:</span> <span class="assignedToName">' + Handlebars.Utils.escapeExpression(assigned_to.real_name) + "</span></td>");
     }
   });
 
   templates.bugs = Handlebars.compile($('#bugsTemplate').html());
 
   var bugNum = parseInt(location.search.substr(1));
-  if (isNaN(bugNum)) {
-    $('#error').text('Provide a bug number in the query string.');
-    return;
+  if (!isNaN(bugNum)) {
+    getBlockers(bugNum);
   }
-
-  $('#rootBugNum').text(bugNum);
-  getBug(bugNum);
+  else {
+    $('#enterBugNum').show().focus().keypress(function(e) {
+      if (e.which == 13 /* enter key */) {
+        var num = parseInt($('#enterBugNum').val());
+        if (!isNaN(num)) {
+          console.log('getBlockers ' + num);
+          getBlockers(num);
+        }
+      }
+    });
+  }
 });
 
 var seenBugs = {};
 var retrievedBugs = {};
-var allowCaching = false;
+var allowCaching = true;
+
+function getBlockers(bugNum)
+{
+  $('#enterBugNum').hide();
+  $('#rootBugNum').text(bugNum).show();
+  $('#blockers').text('');
+  $('#otherBugs').text('');
+  getBug(bugNum);
+}
 
 function getBug(bugNum)
 {
-  console.log("getBug " + bugNum);
   seenBugs[bugNum] = true;
 
   var include_fields = ['id', 'summary', 'assigned_to', 'depends_on', 'cf_blocking_basecamp', 'status', 'whiteboard'].join(',');
