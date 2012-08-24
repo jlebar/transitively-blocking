@@ -155,6 +155,10 @@ function showBugs(bugs) {
 
   for (var id in bugs) {
     var b = bugs[id];
+    if (b.id == $('#rootBugId').text()) {
+      continue;
+    }
+
     if (b.status != 'RESOLVED') {
       if (b.cf_blocking_basecamp == '+') {
         blockers.push(b);
@@ -179,4 +183,9 @@ function showBugs(bugs) {
 
   $('#blockers').html(templates.bugs({bugs: blockers}));
   $('#nonBlockers').html(templates.bugs({bugs: nonBlockers}));
+
+  var rootBug = bugs[$('#rootBugNum').text()];
+  if (rootBug) {
+    $('#rootBugSummary').html('<a href=https://bugzilla.mozilla.org/show_bug.cgi?id=' + rootBug.id + '>' +  rootBug.summary + "</a>");
+  }
 }
