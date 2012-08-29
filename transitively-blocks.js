@@ -170,7 +170,7 @@ function showBugs(bugs) {
       continue;
     }
 
-    if (b.status != 'RESOLVED') {
+    if (b.status != 'RESOLVED' && b.status != 'VERIFIED') {
       if (b.cf_blocking_basecamp == '+') {
         blockers.push(b);
       } else {
